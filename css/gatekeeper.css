@@ -1,0 +1,27 @@
+.b {
+  position: fixed;
+  height: 100px;
+  width: 100px;
+  background-color: rgba(0,0,0,0.05);
+}
+.t {
+  top: 0;
+}
+.u {
+  bottom: 0;
+}
+.l {
+  left: 0;
+}
+.r {
+  right: 0;
+}
+.btn {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.btn:focus {
+  outline: none !important;
+}
