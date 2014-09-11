@@ -179,6 +179,7 @@ $ ->
 
   $('body').on 'click', '#early',  ->
       $(this).toggleClass 'active'
+      $(this).find('i').toggleClass('fa-square-o').toggleClass('fa-check-square-o')
       $(this).blur()
 
       setTimeout =>
@@ -189,6 +190,7 @@ $ ->
 
   $('body').on 'click', '#late', ->
       $(this).toggleClass 'active'
+      $(this).find('i').toggleClass('fa-square-o').toggleClass('fa-check-square-o')
       $(this).blur()
 
       setTimeout =>
@@ -201,7 +203,9 @@ $ ->
     $('#name').val ''
     $('#email').val ''
     $('#early').removeClass('active')
+      .find('i').removeClass('fa-check-square-o').addClass('fa-square-o')
     $('#late').removeClass('active')
+      .find('i').removeClass('fa-check-square-o').addClass('fa-square-o')
 
     buttonText = $('#submit').removeClass('active').html()
     $('#submit').html("Submitted!").addClass("disabled")
