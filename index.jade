@@ -29,15 +29,29 @@ html
             label Lessons
             .wrapper
               #early.btn.btn-primary.btn-lg Series
-                &nbsp
+                | &nbsp
                 small (8pm &ndash; 9pm)
               #late.btn.btn-primary.btn-lg Drop in
-                &nbsp
+                | &nbsp
                 small (9pm &ndash; 10pm)
 
           .row
             .col-md-12
               button#submit.btn.btn-lg.btn-success(type="submit") Check in &raquo;
+
+      div#admin.modal.fade
+        div.modal-dialog
+          div.modal-content
+            div.modal-header
+              button.close(type="button" data-dismiss="modal")
+                span(aria-hidden="true") &times;
+                span.sr-only Close
+              h4.modal-title Sync Check-Ins
+            div.modal-body
+              p One fine body&hellip;
+            div.modal-footer
+              button.btn.btn-default(type="button" data-dismiss="modal") Close
+              button#sync.btn.btn-primary.disabled(type="button") Sync Check-Ins
 
     script(src="http://code.jquery.com/jquery-1.11.0.min.js")
     script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js")
