@@ -61,8 +61,8 @@
     var buttonText;
     $('#name').val('');
     $('#email').val('');
-    $('#early').parent().removeClass('active');
-    $('#late').parent().removeClass('active');
+    $('#early').removeClass('active');
+    $('#late').removeClass('active');
     buttonText = $('#submit').removeClass('active').html();
     $('#submit').html("Submitted!").addClass("disabled");
     $(window).resize();
