@@ -7,7 +7,7 @@
 
   $('#name').focus();
 
-  $('form').submit(function(e) {
+  $('#submit').on('tap click', function(e) {
     var early, email, late, name;
     $("#submit").blur();
     name = $('#name').val();
@@ -28,6 +28,14 @@
     return cancel(e);
   });
 
+  $('#early').on('tap click', function() {
+    return $(this).blur().toggleClass('active');
+  });
+
+  $('#late').on('tap click', function() {
+    return $(this).blur().toggleClass('active');
+  });
+
   resetForm = function() {
     var buttonText;
     $('#name').val('');
@@ -39,7 +47,7 @@
     return setTimeout(function() {
       $('#submit').html(buttonText).removeClass("disabled");
       return $('#name').focus();
-    }, 3000);
+    }, 1000);
   };
 
   cancel = function(e) {

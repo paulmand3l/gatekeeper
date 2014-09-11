@@ -3,7 +3,7 @@ html
   head
     meta(charset="utf-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
-    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="viewport" content="width=device-width, initial-scale=1 user-scalable=no")
     meta(name="author" content="Paul Mandel")
 
     title Gatekeeper
@@ -17,25 +17,23 @@ html
 
     .container
       .row
-        .col-md-8.col-md-offset-2
+        .col-md-12
           h1 Class Check In
-          form.form(role="form")
-            .form-group
-              label(for="email") Name
-              input#name.form-control(type="text")
-            .form-group
-              label(for="email") Email Address
-              input#email.form-control(type="email")
-            .form-group(data-toggle="buttons")
-              label.btn.btn-lg.btn-primary
-                input#early(type="checkbox")
-                | Level 2 (8pm &ndash; 9pm)
-              label.btn.btn-lg.btn-primary
-                input#late(type="checkbox")
-                | Level 1 (9pm &ndash; 10pm)
-            button#submit.btn.btn-lg.btn-success(type="submit") Check in &raquo;
+          .form-group
+            label(for="email") Name
+            input#name.form-control.input-lg(type="text")
+          .form-group
+            label(for="email") Email Address
+            input#email.form-control.input-lg(type="email")
+          p
+            button#early.btn.btn-primary.btn-lg(type="button") Level 2 (8pm &ndash; 9pm)
+            button#late.btn.btn-primary.btn-lg(type="button") Level 1 (9pm &ndash; 10pm)
 
-    script(src="//code.jquery.com/jquery-1.11.0.min.js")
-    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js")
+          .row
+            .col-md-12
+              button#submit.btn.btn-lg.btn-success(type="submit") Check in &raquo;
+
+    script(src="http://code.jquery.com/jquery-1.11.0.min.js")
+    script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js")
     script(src="js/gatekeeper.js")
 
