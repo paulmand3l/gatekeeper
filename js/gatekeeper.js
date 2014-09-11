@@ -12,7 +12,7 @@
     "message": {
       "text": "Example text content",
       "subject": "Attendance for " + ((new Date()).getMonth() + 1) + '/' + ((new Date()).getDate()),
-      "from_email": "gatekeeper@1dance.com",
+      "from_email": "gatekeeper@sundownblues.com",
       "from_name": "Gatekeeper",
       "to": [
         {
