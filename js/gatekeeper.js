@@ -66,6 +66,9 @@
 
   renderInfo = function(info) {
     var html, tuple, _i, _len;
+    if ((info != null ? info.length : void 0) === 0) {
+      return "<p>No students.</p>";
+    }
     html = '<table class="table table-striped">';
     html += "<tr><th>Email</th><th>Name</th></tr>";
     for (_i = 0, _len = info.length; _i < _len; _i++) {

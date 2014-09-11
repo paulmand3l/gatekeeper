@@ -82,6 +82,9 @@ arraysEqual = (a, b) ->
   true
 
 renderInfo = (info) ->
+  if info?.length == 0
+    return "<p>No students.</p>"
+
   html = '<table class="table table-striped">'
   html += "<tr><th>Email</th><th>Name</th></tr>"
   for tuple in info
