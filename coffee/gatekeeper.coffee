@@ -1,37 +1,55 @@
 earlyStudents = []
 lateStudents = []
 
-earlyStudents = [
-  ["Paul Mandel", "fjdskl@fjkdls.com"],
-  ["fdsjkl", "fdjkslfjdkls@fkdlsfjdksl.com"],
-  ["jfdksl", "fdjskl@fjklds.com"],
-  ["fdjskfls", "fjdklsfjdkls@jfkldsjfkld.com"],
-  ["fjdkslfjdskl", "fjdklsf@fjklsjfkls.com"],
-  ["fjdkslf", "fjskfld@fjkdlsfj.com"],
-  ["fdjskfls", "fjkldsjfkdl@fjkdlsj.com"],
-  ["fdjsklf", "fjdklsfjdkls@jklfd.com"],
-  ["fdjsklf", "fjdklsfjdksl@fjkdlsfjkdls.com"],
-  ["fjdkslf", "fjkdlsfjdksl@jfkdlsjfkl.com"],
-  ["fjdkslfjsdkl", "fjdkslfjkdl@jfkdlsjfklsd.com"],
-  ["fjdkslfk", "fjdklsfjkdl@fjdklsfjdkls.com"],
-  ["fdjskflsdjkl", "fjdkslfjdksl@fjdklsfjkl.com"],
-]
+############################
+# TEST DATA
+# earlyStudents = [
+#   ["Paul Mandel", "fjdskl@fjkdls.com"],
+#   ["fdsjkl", "fdjkslfjdkls@fkdlsfjdksl.com"],
+#   ["jfdksl", "fdjskl@fjklds.com"],
+#   ["fdjskfls", "fjdklsfjdkls@jfkldsjfkld.com"],
+#   ["fjdkslfjdskl", "fjdklsf@fjklsjfkls.com"],
+#   ["fjdkslf", "fjskfld@fjkdlsfj.com"],
+#   ["fdjskfls", "fjkldsjfkdl@fjkdlsj.com"],
+#   ["fdjsklf", "fjdklsfjdkls@jklfd.com"],
+#   ["fdjsklf", "fjdklsfjdksl@fjkdlsfjkdls.com"],
+#   ["fjdkslf", "fjkdlsfjdksl@jfkdlsjfkl.com"],
+#   ["fjdkslfjsdkl", "fjdkslfjkdl@jfkdlsjfklsd.com"],
+#   ["fjdkslfk", "fjdklsfjkdl@fjdklsfjdkls.com"],
+#   ["fdjskflsdjkl", "fjdkslfjdksl@fjdklsfjkl.com"],
+# ]
 
-lateStudents = [
-  ["Paul Mandel", "fjdskl@fjkdls.com"],
-  ["fdsjkl", "fdjkslfjdkls@fkdlsfjdksl.com"],
-  ["jfdksl", "fdjskl@fjklds.com"],
-  ["fdjskfls", "fjdklsfjdkls@jfkldsjfkld.com"],
-  ["fjdkslfjdskl", "fjdklsf@fjklsjfkls.com"],
-  ["ruewio", "fjskfld@fjkdlsfj.com"],
-  ["wruieow", "fjkldsjfkdl@fjkdlsj.com"],
-  ["wuriewo", "fjdklsfjdkls@jklfd.com"],
-  ["ruieowruiewo", "fjdklsfjdksl@fjkdlsfjkdls.com"],
-  ["reuwio", "fjkdlsfjdksl@jfkdlsjfkl.com"],
-  ["eruwio", "fjdkslfjkdl@jfkdlsjfklsd.com"],
-  ["werueiow", "fjdklsfjkdl@fjdklsfjdkls.com"],
-  ["rueiwo", "fjdkslfjdksl@fjdklsfjkl.com"],
-]
+# lateStudents = [
+#   ["Paul Mandel", "fjdskl@fjkdls.com"],
+#   ["fdsjkl", "fdjkslfjdkls@fkdlsfjdksl.com"],
+#   ["jfdksl", "fdjskl@fjklds.com"],
+#   ["fdjskfls", "fjdklsfjdkls@jfkldsjfkld.com"],
+#   ["fjdkslfjdskl", "fjdklsf@fjklsjfkls.com"],
+#   ["ruewio", "fjskfld@fjkdlsfj.com"],
+#   ["wruieow", "fjkldsjfkdl@fjkdlsj.com"],
+#   ["wuriewo", "fjdklsfjdkls@jklfd.com"],
+#   ["ruieowruiewo", "fjdklsfjdksl@fjkdlsfjkdls.com"],
+#   ["reuwio", "fjkdlsfjdksl@jfkdlsjfkl.com"],
+#   ["eruwio", "fjdkslfjkdl@jfkdlsjfklsd.com"],
+#   ["werueiow", "fjdklsfjkdl@fjdklsfjdkls.com"],
+#   ["rueiwo", "fjdkslfjdksl@fjdklsfjkl.com"],
+# ]
+###############################
+
+messageUrl = "https://mandrillapp.com/api/1.0/messages/send.json"
+messageJSON =
+  "key": "UrIM_1K4VHo5Vmo6RLEaSA"
+  "message":
+      "text": "Example text content"
+      "subject": "Attendance for " + ((new Date()).getMonth()+1) + '/' + ((new Date()).getDate())
+      "from_email": "gatekeeper@1dance.com"
+      "from_name": "Gatekeeper"
+      "to": [
+          {
+              "email": "paul.mand3l@gmail.com"
+              "type": "to"
+          }
+      ]
 
 checkOnline = ->
   if window.navigator.onLine
@@ -71,6 +89,19 @@ renderInfo = (info) ->
   html += '</table>'
   return html
 
+renderText = (early, late) ->
+  retval = ''
+  retval += "Series Students\n"
+  for std in early
+    retval += std[1] + '\t' + std[0] + '\n'
+  retval += '\n'
+
+  retval += "Drop-in Students\n"
+  for std in late
+    retval += std[1] + '\t' + std[0] + '\n'
+
+  retval
+
 sequence = []
 timeout = undefined
 $ ->
@@ -95,6 +126,7 @@ $ ->
       console.log 'success!'
       $('#admin .modal-body').html('<h3>Series Class</h3>' + renderInfo(earlyStudents) + '<h3>Drop-In Class</h3>' + renderInfo(lateStudents))
       $('#admin').modal('show')
+      console.log JSON.stringify earlyStudents, null, 2
       sequence.length = 0
       return
 
@@ -103,8 +135,21 @@ $ ->
       sequence.length = 0
     , 5000
 
+  $('#sync').click ->
+    $(this).addClass('disabled').text "Syncing..."
+    messageJSON.message.text = renderText earlyStudents, lateStudents
+    $.post messageUrl, messageJSON
+      .done (data, status, xhr) ->
+        alert "Sync successful."
+        earlyStudents.length = 0
+        lateStudents.length = 0
+      .fail (xhr, status, error) ->
+        alert "Sync failed. Please try again.\n\n" + error
+      .always ->
+        $(this).removeClass('disabled').text 'Sync'
 
-  $('#submit').on 'tap click', (e) ->
+
+  $('#submit').on 'click', (e) ->
       $("#submit").blur()
       name = $('#name').val()
       email = $('#email').val()
@@ -142,7 +187,6 @@ $ ->
   $('body').on 'click', '#late', ->
       $(this).toggleClass 'active'
       $(this).blur()
-
 
       setTimeout =>
         parent = $(this).parent()

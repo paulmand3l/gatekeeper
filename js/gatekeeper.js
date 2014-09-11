@@ -1,13 +1,27 @@
 (function() {
-  var arraysEqual, checkOffline, checkOnline, earlyStudents, lateStudents, renderInfo, sequence, timeout;
+  var arraysEqual, checkOffline, checkOnline, earlyStudents, lateStudents, messageJSON, messageUrl, renderInfo, renderText, sequence, timeout;
 
   earlyStudents = [];
 
   lateStudents = [];
 
-  earlyStudents = [["Paul Mandel", "fjdskl@fjkdls.com"], ["fdsjkl", "fdjkslfjdkls@fkdlsfjdksl.com"], ["jfdksl", "fdjskl@fjklds.com"], ["fdjskfls", "fjdklsfjdkls@jfkldsjfkld.com"], ["fjdkslfjdskl", "fjdklsf@fjklsjfkls.com"], ["fjdkslf", "fjskfld@fjkdlsfj.com"], ["fdjskfls", "fjkldsjfkdl@fjkdlsj.com"], ["fdjsklf", "fjdklsfjdkls@jklfd.com"], ["fdjsklf", "fjdklsfjdksl@fjkdlsfjkdls.com"], ["fjdkslf", "fjkdlsfjdksl@jfkdlsjfkl.com"], ["fjdkslfjsdkl", "fjdkslfjkdl@jfkdlsjfklsd.com"], ["fjdkslfk", "fjdklsfjkdl@fjdklsfjdkls.com"], ["fdjskflsdjkl", "fjdkslfjdksl@fjdklsfjkl.com"]];
+  messageUrl = "https://mandrillapp.com/api/1.0/messages/send.json";
 
-  lateStudents = [["Paul Mandel", "fjdskl@fjkdls.com"], ["fdsjkl", "fdjkslfjdkls@fkdlsfjdksl.com"], ["jfdksl", "fdjskl@fjklds.com"], ["fdjskfls", "fjdklsfjdkls@jfkldsjfkld.com"], ["fjdkslfjdskl", "fjdklsf@fjklsjfkls.com"], ["ruewio", "fjskfld@fjkdlsfj.com"], ["wruieow", "fjkldsjfkdl@fjkdlsj.com"], ["wuriewo", "fjdklsfjdkls@jklfd.com"], ["ruieowruiewo", "fjdklsfjdksl@fjkdlsfjkdls.com"], ["reuwio", "fjkdlsfjdksl@jfkdlsjfkl.com"], ["eruwio", "fjdkslfjkdl@jfkdlsjfklsd.com"], ["werueiow", "fjdklsfjkdl@fjdklsfjdkls.com"], ["rueiwo", "fjdkslfjdksl@fjdklsfjkl.com"]];
+  messageJSON = {
+    "key": "UrIM_1K4VHo5Vmo6RLEaSA",
+    "message": {
+      "text": "Example text content",
+      "subject": "Attendance for " + ((new Date()).getMonth() + 1) + '/' + ((new Date()).getDate()),
+      "from_email": "gatekeeper@1dance.com",
+      "from_name": "Gatekeeper",
+      "to": [
+        {
+          "email": "paul.mand3l@gmail.com",
+          "type": "to"
+        }
+      ]
+    }
+  };
 
   checkOnline = function() {
     if (window.navigator.onLine) {
@@ -62,6 +76,23 @@
     return html;
   };
 
+  renderText = function(early, late) {
+    var retval, std, _i, _j, _len, _len1;
+    retval = '';
+    retval += "Series Students\n";
+    for (_i = 0, _len = early.length; _i < _len; _i++) {
+      std = early[_i];
+      retval += std[1] + '\t' + std[0] + '\n';
+    }
+    retval += '\n';
+    retval += "Drop-in Students\n";
+    for (_j = 0, _len1 = late.length; _j < _len1; _j++) {
+      std = late[_j];
+      retval += std[1] + '\t' + std[0] + '\n';
+    }
+    return retval;
+  };
+
   sequence = [];
 
   timeout = void 0;
@@ -89,6 +120,7 @@
         console.log('success!');
         $('#admin .modal-body').html('<h3>Series Class</h3>' + renderInfo(earlyStudents) + '<h3>Drop-In Class</h3>' + renderInfo(lateStudents));
         $('#admin').modal('show');
+        console.log(JSON.stringify(earlyStudents, null, 2));
         sequence.length = 0;
         return;
       }
@@ -97,7 +129,20 @@
         return sequence.length = 0;
       }, 5000);
     });
-    $('#submit').on('tap click', function(e) {
+    $('#sync').click(function() {
+      $(this).addClass('disabled').text("Syncing...");
+      messageJSON.message.text = renderText(earlyStudents, lateStudents);
+      return $.post(messageUrl, messageJSON).done(function(data, status, xhr) {
+        alert("Sync successful.");
+        earlyStudents.length = 0;
+        return lateStudents.length = 0;
+      }).fail(function(xhr, status, error) {
+        return alert("Sync failed. Please try again.\n\n" + error);
+      }).always(function() {
+        return $(this).removeClass('disabled').text('Sync');
+      });
+    });
+    $('#submit').on('click', function(e) {
       var early, email, late, name;
       $("#submit").blur();
       name = $('#name').val();
