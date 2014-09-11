@@ -31,22 +31,26 @@
     return cancel(e);
   });
 
-  $('#early').on('click', function() {
+  $('body').on('click', '#early', function() {
     $(this).toggleClass('active');
     return setTimeout((function(_this) {
       return function() {
-        alert('boop');
-        return $(_this).blur();
+        var parent;
+        parent = $(_this).parent();
+        $(_this).remove();
+        return $(_this).prependTo(parent);
       };
     })(this), 150);
   });
 
-  $('#late').on('click', function() {
+  $('body').on('click', '#late', function() {
     $(this).toggleClass('active');
     return setTimeout((function(_this) {
       return function() {
-        alert('beep');
-        return $(_this).blur();
+        var parent;
+        parent = $(_this).parent();
+        $(_this).remove();
+        return $(_this).appendTo(parent);
       };
     })(this), 150);
   });

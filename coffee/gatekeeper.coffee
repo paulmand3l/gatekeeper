@@ -31,20 +31,24 @@ $ '#submit'
 
     cancel e
 
-$ '#early'
-  .on 'click', ->
+$ 'body'
+  .on 'click', '#early',  ->
     $(this).toggleClass 'active'
+
     setTimeout =>
-      alert 'boop'
-      $(this).blur()
+      parent = $(this).parent()
+      $(this).remove()
+      $(this).prependTo(parent)
     , 150
 
-$ '#late'
-  .on 'click', ->
+$ 'body'
+  .on 'click', '#late', ->
     $(this).toggleClass 'active'
+
     setTimeout =>
-      alert 'beep'
-      $(this).blur()
+      parent = $(this).parent()
+      $(this).remove()
+      $(this).appendTo(parent)
     , 150
 
 resetForm = ->
