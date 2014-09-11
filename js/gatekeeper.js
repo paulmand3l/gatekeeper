@@ -29,11 +29,21 @@
   });
 
   $('#early').on('tap click', function() {
-    return $(this).blur().toggleClass('active');
+    $(this).toggleClass('active');
+    return setTimeout((function(_this) {
+      return function() {
+        return $(_this).blur();
+      };
+    })(this), 150);
   });
 
   $('#late').on('tap click', function() {
-    return $(this).blur().toggleClass('active');
+    $(this).toggleClass('active');
+    return setTimeout((function(_this) {
+      return function() {
+        return $(_this).blur();
+      };
+    })(this), 150);
   });
 
   resetForm = function() {
