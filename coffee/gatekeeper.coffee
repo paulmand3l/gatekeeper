@@ -32,16 +32,18 @@ $ '#submit'
     cancel e
 
 $ '#early'
-  .on 'tap click', ->
+  .on 'click', ->
     $(this).toggleClass 'active'
     setTimeout =>
+      alert 'boop'
       $(this).blur()
     , 150
 
 $ '#late'
-  .on 'tap click', ->
+  .on 'click', ->
     $(this).toggleClass 'active'
     setTimeout =>
+      alert 'beep'
       $(this).blur()
     , 150
 

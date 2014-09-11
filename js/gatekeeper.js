@@ -31,19 +31,21 @@
     return cancel(e);
   });
 
-  $('#early').on('tap click', function() {
+  $('#early').on('click', function() {
     $(this).toggleClass('active');
     return setTimeout((function(_this) {
       return function() {
+        alert('boop');
         return $(_this).blur();
       };
     })(this), 150);
   });
 
-  $('#late').on('tap click', function() {
+  $('#late').on('click', function() {
     $(this).toggleClass('active');
     return setTimeout((function(_this) {
       return function() {
+        alert('beep');
         return $(_this).blur();
       };
     })(this), 150);
