@@ -33,6 +33,7 @@
 
   $('body').on('click', '#early', function() {
     $(this).toggleClass('active');
+    $(this).blur();
     return setTimeout((function(_this) {
       return function() {
         var parent;
@@ -40,11 +41,12 @@
         $(_this).remove();
         return $(_this).prependTo(parent);
       };
-    })(this), 150);
+    })(this), 200);
   });
 
   $('body').on('click', '#late', function() {
     $(this).toggleClass('active');
+    $(this).blur();
     return setTimeout((function(_this) {
       return function() {
         var parent;
@@ -52,7 +54,7 @@
         $(_this).remove();
         return $(_this).appendTo(parent);
       };
-    })(this), 150);
+    })(this), 200);
   });
 
   resetForm = function() {
@@ -63,6 +65,7 @@
     $('#late').parent().removeClass('active');
     buttonText = $('#submit').removeClass('active').html();
     $('#submit').html("Submitted!").addClass("disabled");
+    $(window).resize();
     return setTimeout(function() {
       $('#submit').html(buttonText).removeClass("disabled");
       return $('#name').focus();

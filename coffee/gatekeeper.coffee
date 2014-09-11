@@ -34,22 +34,25 @@ $ '#submit'
 $ 'body'
   .on 'click', '#early',  ->
     $(this).toggleClass 'active'
+    $(this).blur()
 
     setTimeout =>
       parent = $(this).parent()
       $(this).remove()
       $(this).prependTo(parent)
-    , 150
+    , 200
 
 $ 'body'
   .on 'click', '#late', ->
     $(this).toggleClass 'active'
+    $(this).blur()
+
 
     setTimeout =>
       parent = $(this).parent()
       $(this).remove()
       $(this).appendTo(parent)
-    , 150
+    , 200
 
 resetForm = ->
   $('#name').val ''
@@ -59,6 +62,7 @@ resetForm = ->
 
   buttonText = $('#submit').removeClass('active').html()
   $('#submit').html("Submitted!").addClass("disabled")
+  $(window).resize()
   setTimeout ->
     $('#submit').html(buttonText).removeClass("disabled")
     $('#name').focus()
