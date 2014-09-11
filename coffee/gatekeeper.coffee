@@ -29,11 +29,17 @@ $ '#submit'
 
 $ '#early'
   .on 'tap click', ->
-    $(this).blur().toggleClass 'active'
+    $(this).toggleClass 'active'
+    setTimeout =>
+      $(this).blur()
+    , 150
 
 $ '#late'
   .on 'tap click', ->
-    $(this).blur().toggleClass 'active'
+    $(this).toggleClass 'active'
+    setTimeout =>
+      $(this).blur()
+    , 150
 
 resetForm = ->
   $('#name').val ''
