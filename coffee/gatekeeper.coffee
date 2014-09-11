@@ -1,7 +1,11 @@
 earlyStudents = []
 lateStudents = []
 
-$('#name').focus()
+
+
+$ ->
+  $('#name').focus()
+  FastClick.attach(document.body);
 
 $ '#submit'
   .on 'tap click', (e) ->

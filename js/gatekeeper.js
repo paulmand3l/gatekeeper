@@ -5,7 +5,10 @@
 
   lateStudents = [];
 
-  $('#name').focus();
+  $(function() {
+    $('#name').focus();
+    return FastClick.attach(document.body);
+  });
 
   $('#submit').on('tap click', function(e) {
     var early, email, late, name;
