@@ -131,7 +131,7 @@ $ ->
   $('#name').focus()
   FastClick.attach(document.body);
   $(window).on 'beforeunload', ->
-    return "You have unsynced check-ins. These check-ins will be lost."
+    return "You have unsynced check-ins. These check-ins will be lost. Please sync the check-ins before navigating."
 
   $('body').on 'click', '.b', ->
     clearTimeout timeout
