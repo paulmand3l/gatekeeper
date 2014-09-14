@@ -1,5 +1,5 @@
 (function() {
-  var arraysEqual, checkOffline, checkOnline, earlyStudents, lateStudents, messageJSON, messageUrl, renderInfo, renderText, sequence, timeout;
+  var arraysEqual, checkOffline, checkOnline, earlyStudents, lateStudents, messageJSON, messageUrl, renderInfo, renderText, resetForm, sequence, timeout;
 
   earlyStudents = [];
 
@@ -80,7 +80,7 @@
   };
 
   renderText = function(early, late) {
-    var retval, std, _i, _j, _len, _len1;
+    var retval, std, _i, _j, _len, _len1, _results;
     retval = '';
     retval += "Series Students\n";
     for (_i = 0, _len = early.length; _i < _len; _i++) {
@@ -89,10 +89,25 @@
     }
     retval += '\n';
     retval += "Drop-in Students\n";
+    _results = [];
     for (_j = 0, _len1 = late.length; _j < _len1; _j++) {
       std = late[_j];
-      retval += std[1] + '\t' + std[0] + '\n';
+      _results.push(retval += std[1] + '\t' + std[0] + '\n');
     }
+    return _results;
+  };
+
+  resetForm = function() {
+    var buttonText;
+    $('#name').val('');
+    $('#email').val('');
+    $('#early').removeClass('active').find('i').removeClass('fa-check-square-o').addClass('fa-square-o');
+    $('#late').removeClass('active').find('i').removeClass('fa-check-square-o').addClass('fa-square-o');
+    buttonText = $('#submit').removeClass('active').html();
+    $('#submit').html("Submitted!").addClass("disabled");
+    $(window).resize();
+    $('#submit').html(buttonText).removeClass("disabled");
+    $('#name').focus();
     return retval;
   };
 
@@ -101,7 +116,7 @@
   timeout = void 0;
 
   $(function() {
-    var cancel, resetForm;
+    var cancel;
     $('#admin').modal({
       show: false
     });
@@ -155,7 +170,10 @@
       }
       early = $('#early').hasClass('active') ? true : false;
       late = $('#late').hasClass('active') ? true : false;
-      resetForm();
+      if (early === false && late === false) {
+        alert("Please select a class.");
+        return;
+      }
       if (early) {
         earlyStudents.push([email, name]);
         console.log(earlyStudents.length, 'series students');
@@ -164,6 +182,8 @@
         lateStudents.push([email, name]);
         console.log(lateStudents.length, 'drop in students');
       }
+      alert("Thanks for checking in!");
+      resetForm();
       console.log(name, email, early, late);
       return cancel(e);
     });
@@ -193,20 +213,6 @@
         };
       })(this), 200);
     });
-    resetForm = function() {
-      var buttonText;
-      $('#name').val('');
-      $('#email').val('');
-      $('#early').removeClass('active').find('i').removeClass('fa-check-square-o').addClass('fa-square-o');
-      $('#late').removeClass('active').find('i').removeClass('fa-check-square-o').addClass('fa-square-o');
-      buttonText = $('#submit').removeClass('active').html();
-      $('#submit').html("Submitted!").addClass("disabled");
-      $(window).resize();
-      return setTimeout(function() {
-        $('#submit').html(buttonText).removeClass("disabled");
-        return $('#name').focus();
-      }, 1000);
-    };
     return cancel = function(e) {
       e.preventDefault();
       e.stopPropagation();

@@ -103,6 +103,21 @@ renderText = (early, late) ->
   for std in late
     retval += std[1] + '\t' + std[0] + '\n'
 
+resetForm = ->
+  $('#name').val ''
+  $('#email').val ''
+  $('#early').removeClass('active')
+    .find('i').removeClass('fa-check-square-o').addClass('fa-square-o')
+  $('#late').removeClass('active')
+    .find('i').removeClass('fa-check-square-o').addClass('fa-square-o')
+
+  buttonText = $('#submit').removeClass('active').html()
+  $('#submit').html("Submitted!").addClass("disabled")
+  $(window).resize()
+
+  $('#submit').html(buttonText).removeClass("disabled")
+  $('#name').focus()
+
   retval
 
 sequence = []
@@ -163,7 +178,9 @@ $ ->
       early = if $('#early').hasClass('active') then true else false
       late = if $('#late').hasClass('active') then true else false
 
-      do resetForm
+      if early is false and late is false
+        alert "Please select a class."
+        return
 
       if early
         earlyStudents.push [email, name]
@@ -172,6 +189,9 @@ $ ->
       if late
         lateStudents.push [email, name]
         console.log lateStudents.length, 'drop in students'
+
+      alert("Thanks for checking in!")
+      do resetForm
 
       console.log name, email, early, late
 
@@ -198,22 +218,6 @@ $ ->
         $(this).remove()
         $(this).appendTo(parent)
       , 200
-
-  resetForm = ->
-    $('#name').val ''
-    $('#email').val ''
-    $('#early').removeClass('active')
-      .find('i').removeClass('fa-check-square-o').addClass('fa-square-o')
-    $('#late').removeClass('active')
-      .find('i').removeClass('fa-check-square-o').addClass('fa-square-o')
-
-    buttonText = $('#submit').removeClass('active').html()
-    $('#submit').html("Submitted!").addClass("disabled")
-    $(window).resize()
-    setTimeout ->
-      $('#submit').html(buttonText).removeClass("disabled")
-      $('#name').focus()
-    , 1000
 
   cancel = (e) ->
     e.preventDefault()
